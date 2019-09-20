@@ -4,9 +4,11 @@
 @description: 配置切词器
 """
 import logging
-import os
+
 import jieba
 from jieba import posseg
+
+jieba.default_logger.setLevel(logging.ERROR)
 
 
 def segment(sentence, cut_type='word', pos=False):
@@ -37,31 +39,3 @@ def segment(sentence, cut_type='word', pos=False):
             return jieba.lcut(sentence)
         elif cut_type == 'char':
             return list(sentence)
-
-
-class Tokenizer(object):
-    def __init__(self, dict_path='', custom_word_freq_dict=None, custom_confusion_dict=None):
-        self.model = jieba
-        self.model.default_logger.setLevel(logging.ERROR)
-        # 初始化大词典
-        if os.path.exists(dict_path):
-            self.model.set_dictionary(dict_path)
-        # 加载用户自定义词典
-        if custom_word_freq_dict:
-            for w, f in custom_word_freq_dict.items():
-                self.model.add_word(w, freq=f)
-
-        # 加载混淆集词典
-        if custom_confusion_dict:
-            for k, word in custom_confusion_dict.items():
-                # 添加到分词器的自定义词典中
-                self.model.add_word(k)
-                self.model.add_word(word)
-
-    def tokenize(self, sentence):
-        """
-        切词并返回切词位置
-        :param sentence:
-        :return: (word, start_index, end_index) model='default'
-        """
-        return list(self.model.tokenize(sentence))
