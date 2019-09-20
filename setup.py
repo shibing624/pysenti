@@ -26,7 +26,7 @@ with open('requirements.txt', 'r', encoding='utf-8') as f:
 setup(
     name='sentiment_classifier_zh',
     version=__version__,
-    description='Chinese Sentiment Classification',
+    description='Chinese Sentiment Classifier',
     long_description=readme,
     long_description_content_type='text/markdown',
     author='XuMing',
