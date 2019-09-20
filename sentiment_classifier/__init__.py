@@ -5,7 +5,7 @@
 """
 
 from . import config
-from .sentiment import Sentiment
+from .model_classifier import Sentiment
 
 __version__ = '0.1.1'
 

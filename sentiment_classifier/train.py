@@ -7,7 +7,7 @@
 from codecs import open
 
 from sentiment_classifier import config
-from sentiment_classifier.sentiment import Sentiment
+from sentiment_classifier.model_classifier import Sentiment
 
 
 def train(neg_file, pos_file, model_path):
