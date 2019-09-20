@@ -8,7 +8,7 @@ import pickle
 import re
 from codecs import open
 
-from . import config
+from sentiment_classifier import config
 
 
 def load_set(path):
@@ -54,3 +54,15 @@ def dump_pkl(vocab, pkl_path, overwrite=True):
         print("save %s ok." % pkl_path)
     else:
         raise IOError("no file: %s" % pkl_path)
+
+
+def split_sentence(sentence):
+    pattern = re.compile("[，。%、！!？?,；～~.… ]+")
+    clauses = [i for i in pattern.split(sentence.strip()) if i]
+    return clauses
+
+
+if __name__ == '__main__':
+    sent = "nihao,我是警察，你站起来。我要问你话！好不。"
+    k = split_sentence(sent)
+    print(k)

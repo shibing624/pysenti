@@ -8,7 +8,7 @@ import logging
 import jieba
 from jieba import posseg
 
-jieba.default_logger.setLevel(logging.ERROR)
+# jieba.default_logger.setLevel(logging.DEBUG)
 
 
 def segment(sentence, cut_type='word', pos=False):
