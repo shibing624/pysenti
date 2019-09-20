@@ -25,14 +25,6 @@ class BaseProb(object):
         return self.d.keys()
 
 
-class NormalProb(BaseProb):
-    def add(self, key, value):
-        if not self.exists(key):
-            self.d[key] = 0
-        self.d[key] += value
-        self.total += value
-
-
 class AddOneProb(BaseProb):
     def __init__(self):
         self.d = {}
