@@ -1,2 +1,2 @@
-# sentiment-classification
-sentiment classification tool.
+# sentiment-classifier-zh
+Chinese Sentiment Classification Tool.

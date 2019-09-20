@@ -1,0 +1,5 @@
+jieba
+scipy
+scikit-learn
+pypinyin
+kenlm==0.0.0
