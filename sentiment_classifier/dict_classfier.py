@@ -5,21 +5,20 @@
 """
 
 import re
-from collections import defaultdict
-from jieba import posseg
-from sentiment_classifier.tokenizer import segment
+
 from sentiment_classifier import config
+from sentiment_classifier.tokenizer import segment
 from sentiment_classifier.utils import split_sentence
+
 
 class DictClassifier(object):
     def __init__(self):
         # 加载情感词典词典
-        self.phrase_dict = self._get_phrase_dict(config.phrase_dict_path)
         self.positive_dict = self._get_dict(config.positive_dict_path)
         self.negative_dict = self._get_dict(config.negative_dict_path)
-        self.conjunction_dict = self._get_dict(config.conjunction_dict_path) # 连词
+        self.conjunction_dict = self._get_dict(config.conjunction_dict_path)  # 连词
         self.punctuation_dict = self._get_dict(config.punctuation_dict_path)
-        self.adverb_dict = self._get_dict(config.adverb_dict_path) # 副词
+        self.adverb_dict = self._get_dict(config.adverb_dict_path)  # 副词
         self.denial_dict = self._get_dict(config.denial_dict_path)
 
     def classify(self, sentence, print_show=True):
@@ -30,7 +29,7 @@ class DictClassifier(object):
         # 对每分句进行情感分析
         for i in range(len(clauses)):
             # 情感分析子句的数据结构
-            sub_clause = self._analyse_clause(clauses[i].replace("。", "."), print_show)
+            sub_clause = self._analyse_clause(clauses[i], print_show)
 
             # 将子句分析的数据结果添加到整体数据结构中
             comment_analysis["su-clause" + str(i)] = sub_clause
@@ -38,40 +37,23 @@ class DictClassifier(object):
 
         if print_show:
             print("\n" + sentence)
-            self.__output_analysis(comment_analysis)
+            self._output_analysis(comment_analysis)
             print(comment_analysis, end="\n\n\n")
 
         return comment_analysis["score"]
 
     def _analyse_clause(self, clause, print_show):
         sub_clause = {"score": 0, "positive": [], "negative": [], "conjunction": [], "punctuation": [], "pattern": []}
-        seg_result = posseg.lcut(clause)
+        seg_result = segment(clause, pos=True)
 
         # 将分句及分词结果写进运行输出文件，以便复查
         if print_show:
             print(clause)
             print(seg_result)
 
-        # 判断句式：短语
-        judgement = self.__is_clause_pattern3(clause, seg_result)
-        if judgement:
-            sub_clause["score"] += judgement["score"]
-            if judgement["score"] >= 0:
-                sub_clause["positive"].append(judgement)
-            elif judgement["score"] < 0:
-                sub_clause["negative"].append(judgement)
-            match_result = judgement["key"].split(":")[-1]
-            i = 0
-            while i < len(seg_result):
-                if seg_result[i].word in match_result:
-                    if i + 1 == len(seg_result) or seg_result[i + 1].word in match_result:
-                        del (seg_result[i])
-                        continue
-                i += 1
-
         # 逐个分析分词
         for i in range(len(seg_result)):
-            mark, result = self.__analyse_word(seg_result[i].word, seg_result, i)
+            mark, result = self._analyse_word(seg_result[i].word, seg_result, i)
             if mark == 0:
                 continue
             elif mark == 1:
@@ -95,39 +77,8 @@ class DictClassifier(object):
 
         return sub_clause
 
-    def __is_clause_pattern3(self, the_clause, seg_result):
-        for a_phrase in self.phrase_dict:
-            keys = a_phrase.keys()
-            to_compile = a_phrase["key"].replace("……", "[\u4e00-\u9fa5]*")
 
-            if "start" in keys:
-                to_compile = to_compile.replace("*", "{" + a_phrase["start"] + "," + a_phrase["end"] + "}")
-            if "head" in keys:
-                to_compile = a_phrase["head"] + to_compile
-
-            match = re.compile(to_compile).search(the_clause)
-            if match is not None:
-                can_continue = True
-                pos = [flag for word, flag in posseg.cut(match.group())]
-                if "between_tag" in keys:
-                    if a_phrase["between_tag"] not in pos and len(pos) > 2:
-                        can_continue = False
-
-                if can_continue:
-                    for i in range(len(seg_result)):
-                        if seg_result[i].word in match.group():
-                            try:
-                                if seg_result[i + 1].word in match.group():
-                                    return self._emotional_word_analysis(
-                                        a_phrase["key"] + ":" + match.group(), a_phrase["value"],
-                                        [x for x, y in seg_result], i)
-                            except IndexError:
-                                return self._emotional_word_analysis(
-                                    a_phrase["key"] + ":" + match.group(), a_phrase["value"],
-                                    [x for x, y in seg_result], i)
-        return ""
-
-    def __analyse_word(self, the_word, seg_result=None, index=-1):
+    def _analyse_word(self, the_word, seg_result=None, index=-1):
         # 判断是否是连词
         judgement = self._is_word_conjunction(the_word)
         if judgement != "":
@@ -253,7 +204,7 @@ class DictClassifier(object):
         return orientation
 
     # 输出comment_analysis分析的数据结构结果
-    def __output_analysis(self, comment_analysis):
+    def _output_analysis(self, comment_analysis):
         output = "Score:" + str(comment_analysis["score"]) + "\n"
 
         for i in range(len(comment_analysis) - 1):
@@ -291,47 +242,33 @@ class DictClassifier(object):
                 output += "pattern:"
                 for pattern in clause["pattern"]:
                     output += pattern["key"] + " "
-            # if clause["pattern"] is not None:
-            #     output += "pattern:" + clause["pattern"]["key"] + " "
             output += "\n"
         print(output)
 
-    def _get_phrase_dict(self, path):
-        sentiment_dict = []
-        pattern = re.compile(r"\s+")
-        with open(path, "r", encoding="utf-8") as f:
-            for line in f:
-                a_phrase = {}
-                result = pattern.split(line.strip())
-                if len(result) >= 2:
-                    a_phrase["key"] = result[0]
-                    a_phrase["value"] = float(result[1])
-                    for i, a_split in enumerate(result):
-                        if i < 2:
-                            continue
-                        else:
-                            a, b = a_split.split(":")
-                            a_phrase[a] = b
-                    sentiment_dict.append(a_phrase)
-
-        return sentiment_dict
-
-    # 情感词典的构建
     @staticmethod
     def _get_dict(path, encoding="utf-8"):
+        """
+        情感词典的构建
+        :param path:
+        :param encoding:
+        :return:
+        """
         sentiment_dict = {}
-        pattern = re.compile(r"\s+")
         with open(path, encoding=encoding) as f:
             for line in f:
-                result = pattern.split(line.strip())
-                if len(result) == 2:
-                    sentiment_dict[result[0]] = float(result[1])
+                parts = line.strip().split()
+                if len(parts) == 2:
+                    sentiment_dict[parts[0]] = float(parts[1])
+                elif len(parts) == 1:
+                    sentiment_dict[parts[0]] = 1.0
+                else:
+                    print('error: ', line)
         return sentiment_dict
 
 
 if __name__ == '__main__':
     d = DictClassifier()
-    a_sentence = ['剁椒鸡蛋好难吃。居然有人受得了','土豆丝很好吃','土豆丝很难吃']
+    a_sentence = ['剁椒鸡蛋好难吃。居然有人受得了', '土豆丝很好吃', '土豆丝很难吃']
     for i in a_sentence:
         result = d.classify(i)
         print(i, result)

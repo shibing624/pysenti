@@ -8,7 +8,7 @@ import logging
 import jieba
 from jieba import posseg
 
-# jieba.default_logger.setLevel(logging.DEBUG)
+jieba.default_logger.setLevel(logging.ERROR)
 
 
 def segment(sentence, cut_type='word', pos=False):
@@ -21,12 +21,7 @@ def segment(sentence, cut_type='word', pos=False):
     """
     if pos:
         if cut_type == 'word':
-            word_pos_seq = posseg.lcut(sentence)
-            word_seq, pos_seq = [], []
-            for w, p in word_pos_seq:
-                word_seq.append(w)
-                pos_seq.append(p)
-            return word_seq, pos_seq
+            return posseg.lcut(sentence)
         elif cut_type == 'char':
             word_seq = list(sentence)
             pos_seq = []

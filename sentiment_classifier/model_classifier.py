@@ -13,12 +13,14 @@ class Sentiment(object):
     def __init__(self, model_path):
         self.classifier = Bayes()
         self.model_path = model_path
+        self.inited = False
 
     def save(self):
         self.classifier.save(self.model_path)
 
     def load(self):
         self.classifier.load(self.model_path)
+        self.inited = True
 
     def handle(self, doc):
         words = segment(doc)
@@ -41,6 +43,8 @@ class Sentiment(object):
                     "negative_prob": 0.0
                     dict
         """
+        if not self.inited:
+            self.load()
         result = {"positive_prob": 0.0, "negative_prob": 0.0}
         ret, prob = self.classifier.classify(self.handle(sent))
         if ret == 'pos':
