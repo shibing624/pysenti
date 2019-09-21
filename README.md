@@ -26,7 +26,7 @@ Chinese Sentiment Classification Tool. 中文情感极性分析工具。
 
 ## 特征
 ### 规则
-* [情感词典](https://github.com/shibing624/sentiment-classifier-zh/tree/master/sentiment_classifier/data)整合了`知网情感词典`、`清华大学李军情感词典`、`[BosonNLP情感词典](https://bosonnlp.com/dev/resource)`、`否定词词典`。
+* [情感词典](https://github.com/shibing624/sentiment-classifier-zh/tree/master/sentiment_classifier/data)整合了`知网情感词典`、`清华大学李军情感词典`、[BosonNLP情感词典](https://bosonnlp.com/dev/resource)、`否定词词典`。
 
 ### 模型
 * bayes 文本分类模型
