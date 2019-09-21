@@ -4,12 +4,12 @@
 @description: 
 """
 
-from .bayes import Bayes
-from .tokenizer import segment
-from .utils import filter_stop
+from sentiment_classifier.bayes import Bayes
+from sentiment_classifier.tokenizer import segment
+from sentiment_classifier.utils import filter_stop
 
 
-class Sentiment(object):
+class ModelClassifier(object):
     def __init__(self, model_path):
         self.classifier = Bayes()
         self.model_path = model_path
@@ -56,3 +56,14 @@ class Sentiment(object):
         else:
             raise ValueError("unknown class id.")
         return result
+
+
+if __name__ == '__main__':
+    model = ModelClassifier('./data/sentiment_model.pkl')
+    a_sentence = ['剁椒鸡蛋好难吃。绝对没人受得了',
+                  '土豆丝很好吃', '土豆丝很难吃',
+                  '这笔钱是个天文数字',
+                  '我一会儿出去玩了，你吃啥？给你带']
+    for i in a_sentence:
+        result = model.classify(i)
+        print(i, result)

@@ -5,9 +5,12 @@
 """
 
 from . import config
-from .model_classifier import Sentiment
+from .model_classifier import ModelClassifier
+from .rule_classfier import RuleClassifier
 
 __version__ = '0.1.1'
 
-model = Sentiment(config.sentiment_model_path)
-classify = model.classify
+rule_classifier = RuleClassifier()
+classify = rule_classifier.classify
+
+model_classifier = ModelClassifier(config.sentiment_model_path)

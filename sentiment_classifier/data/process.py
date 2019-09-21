@@ -3,14 +3,23 @@
 @author:XuMing（xuming624@qq.com)
 @description: 
 """
+from codecs import open
 
-import sys
 r = set()
-for line in sys.stdin:
-    line = line.strip().split()
-    if len(line) > 1:
-        pass
-    r.add(line[0])
+with open('pos_dict.txt', 'r', encoding='utf-8')as f:
+    for line in f:
+        line = line.strip()
+        r.add(line)
 
-for i in r:
-    print(i)
+sentiments = set()
+c = 0
+with open('sentiment_dict.txt', 'r', encoding='utf-8') as f:
+    for line in f:
+        line = line.strip().split()
+        w = line[0]
+        sentiments.add(w)
+
+with open('pos', 'w', encoding='utf-8')as f:
+    for i in r:
+        if i not in sentiments:
+            f.write(i + ' 2' + '\n')

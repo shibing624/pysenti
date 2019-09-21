@@ -7,7 +7,7 @@
 from codecs import open
 
 from sentiment_classifier import config
-from sentiment_classifier.model_classifier import Sentiment
+from sentiment_classifier.model_classifier import ModelClassifier
 
 
 def train(neg_file, pos_file, model_path):
@@ -20,7 +20,7 @@ def train(neg_file, pos_file, model_path):
     for line in pos:
         pos_docs.append(line.rstrip("\r\n"))
     global classifier
-    classifier = Sentiment(model_path)
+    classifier = ModelClassifier(model_path)
     classifier.train(neg_docs, pos_docs)
 
 
@@ -37,7 +37,7 @@ def classify(sent):
 
 
 if __name__ == '__main__':
-    train('data/neg.txt', 'data/pos.txt', config.sentiment_model_path)
+    train('data/neg_sentences.txt', 'data/pos_sentences.txt', config.sentiment_model_path)
     save()
     txt = "苹果是一家伟大的公司"
     print(txt, ' prob: ', classify(txt))
