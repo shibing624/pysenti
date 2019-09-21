@@ -46,15 +46,8 @@ cd sentiment-classifier-zh
 python3 setup.py install
 ```
 
-## 规则方法使用说明
-
-
-### 安装依赖
-```
-pip3 install -r requirements.txt
-```
-
-### 使用示例
+## 使用示例
+### 规则方法
 ```
 import sentiment_classifier
 
@@ -75,9 +68,8 @@ output:
 ```
 
 
-## 模型方法使用说明
+### 模型方法
 
-### 使用示例
 
 ```
 from sentiment_classifier import model_classifier
