@@ -1,2 +1,106 @@
+
+[![PyPI version](https://badge.fury.io/py/sentiment-classifier-zh.svg)](https://badge.fury.io/py/sentiment-classifier-zh)
+[![License Apache 2.0](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/shibing624/sentiment-classifier-zh/LICENSE)
+![Language](https://img.shields.io/badge/Language-Python-blue.svg)
+![Python3](https://img.shields.io/badge/Python-3.X-red.svg)
+
+
 # sentiment-classifier-zh
-Chinese Sentiment Classification Tool.
+
+Chinese Sentiment Classification Tool. 中文情感极性分析工具。
+
+**sentiment-classifier-zh**基于规则词典的情感极性分析，扩展性强，可作为工业用的基准方法。
+
+
+## 方法
+### 规则的解决思路
+1. 中文情感极性分析，文本切分为段落，再切词，通过情感词标识出各个词语的情感极性，包括积极、中立、消极。
+2. 结合句子结构（包括连词、否定词、副词、标点等）给各情感词语的情感极性赋予权重，然后加权求和得到文本的情感极性得分。
+3. 优点：泛化性好，规则可扩展性强，所有领域通用。
+4. 缺点：规则词典收集困难，专家系统的权重设定有局限，单一领域准确率相比模型方法低。
+
+### 模型的解决思路
+1. 常见的[NLP文本分类模型](https://github.com/shibing624/text-classifier)均可，包括经典文本分类模型（LR、SVM、Xgboost等）和深度文本分类模型（TextCNN、Bi-LSTM、BERT等）。
+2. 优点：单一领域准召率高。
+3. 缺点：不通用，有标注数据的样本收集困难，扩展性弱。
+
+## 特征
+### 规则
+* [情感词典](https://github.com/shibing624/sentiment-classifier-zh/tree/master/sentiment_classifier/data)整合了`知网情感词典`、`清华大学李军情感词典`、`[BosonNLP情感词典](https://bosonnlp.com/dev/resource)`、`否定词词典`。
+
+### 模型
+* bayes 文本分类模型
+* [样本数据](https://github.com/shibing624/sentiment-classifier-zh/tree/master/sentiment_classifier/data)来自商品评论数据，分为积极、消极两类。
+
+## demo
+
+https://www.borntowin.cn/product/sentiment_classify
+
+
+## 安装
+* 全自动安装：pip3 install sentiment-classifier-zh
+* 半自动安装：
+```
+git clone https://github.com/shibing624/sentiment-classifier-zh.git
+cd sentiment-classifier-zh
+python3 setup.py install
+```
+
+## 规则方法使用说明
+
+
+### 安装依赖
+```
+pip3 install -r requirements.txt
+```
+
+### 使用示例
+```
+import sentiment_classifier
+
+texts = ["苹果是一家伟大的公司",
+         "土豆丝很好吃",
+         "土豆丝很难吃"]
+for i in texts:
+    r = sentiment_classifier.classify(i)
+    print(i, r['score'], r)
+
+```
+
+output:
+```
+苹果是一家伟大的公司 3.4346924811096997 {'score': 3.4346924811096997, 'sub_clause0': {'score': 3.4346924811096997, 'sentiment': [{'key': '苹果', 'adverb': [], 'denial': [], 'value': 1.37846341627, 'score': 1.37846341627}, {'key': '是', 'adverb': [], 'denial': [], 'value': -0.252600480826, 'score': -0.252600480826}, {'key': '一家', 'adverb': [], 'denial': [], 'value': 1.48470161748, 'score': 1.48470161748}, {'key': '伟大', 'adverb': [], 'denial': [], 'value': 1.14925252286, 'score': 1.14925252286}, {'key': '的', 'adverb': [], 'denial': [], 'value': 0.0353323193687, 'score': 0.0353323193687}, {'key': '公司', 'adverb': [], 'denial': [], 'value': -0.360456914043, 'score': -0.360456914043}], 'conjunction': []}}
+土豆丝很好吃 2.294311221077 {'score': 2.294311221077, 'sub_clause0': {'score': 2.294311221077, 'sentiment': [{'key': '土豆丝', 'adverb': [], 'denial': [], 'value': 0.294892711165, 'score': 0.294892711165}, {'key': '很', 'adverb': [], 'denial': [], 'value': 0.530242664632, 'score': 0.530242664632}, {'key': '好吃', 'adverb': [], 'denial': [], 'value': 1.46917584528, 'score': 1.46917584528}], 'conjunction': []}}
+土豆丝很难吃 -2.381874203563 {'score': -2.381874203563, 'sub_clause0': {'score': -2.381874203563, 'sentiment': [{'key': '土豆丝', 'adverb': [], 'denial': [], 'value': 0.294892711165, 'score': 0.294892711165}, {'key': '很', 'adverb': [], 'denial': [], 'value': 0.530242664632, 'score': 0.530242664632}, {'key': '难吃', 'adverb': [], 'denial': [], 'value': -3.20700957936, 'score': -3.20700957936}], 'conjunction': []}}
+```
+
+
+## 模型方法使用说明
+
+### 使用示例
+
+```
+from sentiment_classifier import model_classifier
+
+texts = ["苹果是一家伟大的公司",
+         "土豆丝很好吃",
+         "土豆丝很难吃"]
+for i in texts:
+    result = model_classifier.classify(i)
+    print(i, result)
+
+```
+
+output：
+```
+苹果是一家伟大的公司 {'positive_prob': 0.682, 'negative_prob': 0.318}
+土豆丝很好吃 {'positive_prob': 0.601, 'negative_prob': 0.399}
+土豆丝很难吃 {'positive_prob': 0.283, 'negative_prob': 0.717}
+
+```
+
+
+## 感谢
+
+1. snownlp
+2. SentimentPolarityAnalysis

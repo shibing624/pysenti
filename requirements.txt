@@ -1,3 +1,1 @@
 jieba
-scipy
-scikit-learn
