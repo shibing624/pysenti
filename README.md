@@ -1,15 +1,15 @@
 
-[![PyPI version](https://badge.fury.io/py/sentiment-classifier-zh.svg)](https://badge.fury.io/py/sentiment-classifier-zh)
-[![License Apache 2.0](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/shibing624/sentiment-classifier-zh/LICENSE)
+[![PyPI version](https://badge.fury.io/py/pysenti.svg)](https://badge.fury.io/py/pysenti)
+[![License Apache 2.0](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/shibing624/pysenti/LICENSE)
 ![Language](https://img.shields.io/badge/Language-Python-blue.svg)
 ![Python3](https://img.shields.io/badge/Python-3.X-red.svg)
 
 
-# sentiment-classifier-zh
+# pysenti
 
-Chinese Sentiment Classification Tool. 中文情感极性分析工具。
+Chinese Sentiment Classification Tool for Python. 中文情感极性分析工具。
 
-**sentiment-classifier-zh**基于规则词典的情感极性分析，扩展性强，可作为工业用的基准方法。
+**pysenti**基于规则词典的情感极性分析，扩展性强，可作为工业用的基准方法。
 
 
 ## 方法
@@ -26,11 +26,11 @@ Chinese Sentiment Classification Tool. 中文情感极性分析工具。
 
 ## 特征
 ### 规则
-* [情感词典](https://github.com/shibing624/sentiment-classifier-zh/tree/master/sentiment_classifier/data)整合了`知网情感词典`、`清华大学李军情感词典`、[BosonNLP情感词典](https://bosonnlp.com/dev/resource)、`否定词词典`。
+* [情感词典](https://github.com/shibing624/pysenti/tree/master/sentiment_classifier/data)整合了`知网情感词典`、`清华大学李军情感词典`、[BosonNLP情感词典](https://bosonnlp.com/dev/resource)、`否定词词典`。
 
 ### 模型
 * bayes 文本分类模型
-* [样本数据](https://github.com/shibing624/sentiment-classifier-zh/tree/master/sentiment_classifier/data)来自商品评论数据，分为积极、消极两类。
+* [样本数据](https://github.com/shibing624/pysenti/tree/master/sentiment_classifier/data)来自商品评论数据，分为积极、消极两类。
 
 ## demo
 
@@ -38,24 +38,24 @@ https://www.borntowin.cn/product/sentiment_classify
 
 
 ## 安装
-* 全自动安装：pip3 install sentiment-classifier-zh
+* 全自动安装：pip3 install pysenti
 * 半自动安装：
 ```
-git clone https://github.com/shibing624/sentiment-classifier-zh.git
-cd sentiment-classifier-zh
+git clone https://github.com/shibing624/pysenti.git
+cd pysenti
 python3 setup.py install
 ```
 
 ## 使用示例
 ### 规则方法
 ```
-import sentiment_classifier
+import pysenti
 
 texts = ["苹果是一家伟大的公司",
          "土豆丝很好吃",
          "土豆丝很难吃"]
 for i in texts:
-    r = sentiment_classifier.classify(i)
+    r = pysenti.classify(i)
     print(i, r['score'], r)
 
 ```
@@ -66,13 +66,13 @@ output:
 土豆丝很好吃 2.294311221077 {'score': 2.294311221077, 'sub_clause0': {'score': 2.294311221077, 'sentiment': [{'key': '土豆丝', 'adverb': [], 'denial': [], 'value': 0.294892711165, 'score': 0.294892711165}, {'key': '很', 'adverb': [], 'denial': [], 'value': 0.530242664632, 'score': 0.530242664632}, {'key': '好吃', 'adverb': [], 'denial': [], 'value': 1.46917584528, 'score': 1.46917584528}], 'conjunction': []}}
 土豆丝很难吃 -2.381874203563 {'score': -2.381874203563, 'sub_clause0': {'score': -2.381874203563, 'sentiment': [{'key': '土豆丝', 'adverb': [], 'denial': [], 'value': 0.294892711165, 'score': 0.294892711165}, {'key': '很', 'adverb': [], 'denial': [], 'value': 0.530242664632, 'score': 0.530242664632}, {'key': '难吃', 'adverb': [], 'denial': [], 'value': -3.20700957936, 'score': -3.20700957936}], 'conjunction': []}}
 ```
-
+> score: 正值是积极情感；负值是消极情感。
 
 ### 模型方法
 
 
 ```
-from sentiment_classifier import model_classifier
+from pysenti import model_classifier
 
 texts = ["苹果是一家伟大的公司",
          "土豆丝很好吃",
