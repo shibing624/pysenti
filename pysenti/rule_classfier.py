@@ -4,7 +4,6 @@
 @description: 
 """
 from codecs import open
-from collections import OrderedDict
 
 from pysenti import config
 from pysenti import tokenizer
@@ -14,7 +13,7 @@ from pysenti.utils import split_sentence
 
 class RuleClassifier(object):
     def __init__(self):
-        self.name = 'rule_classifier'
+        self.name = "rule_classifier"
         self.sentiment_dict = {}
         self.conjunction_dict = {}
         self.adverb_dict = {}
@@ -40,7 +39,7 @@ class RuleClassifier(object):
         if not self.inited:
             self.init()
         # 情感分析整体数据结构
-        result = OrderedDict(score=0)
+        result = {"score": 0}
         text = strdecode(text)
         # 分句
         clauses = split_sentence(text)
@@ -51,7 +50,7 @@ class RuleClassifier(object):
 
             # 将子句分析的数据结果添加到整体数据结构中
             result["sub_clause" + str(i)] = sub_clause
-            result['score'] += sub_clause['score']
+            result["score"] += sub_clause["score"]
 
         return result
 
@@ -103,7 +102,7 @@ class RuleClassifier(object):
         if view_window > -1:  # 无越界
             # 判断前一个词是否是情感词
             if segments[view_window] in self.sentiment_dict:
-                orientation['score'] = orientation_score
+                orientation["score"] = orientation_score
                 return orientation
             # 判断是否是副词
             if segments[view_window] in self.adverb_dict:
@@ -143,7 +142,7 @@ class RuleClassifier(object):
         if view_window > -1:
             # 判断前一个词是否是情感词
             if segments[view_window] in self.sentiment_dict:
-                orientation['score'] = orientation_score
+                orientation["score"] = orientation_score
                 return orientation
             if segments[view_window] in self.adverb_dict:
                 adverb = {"key": segments[view_window], "sentiment": 3,
@@ -159,7 +158,7 @@ class RuleClassifier(object):
                 if len(orientation["adverb"]) > 0 and len(orientation["denial"]) == 0:
                     orientation_score *= 0.3
         # 添加情感分析值。
-        orientation['score'] = orientation_score
+        orientation["score"] = orientation_score
         # 返回的数据结构
         return orientation
 
