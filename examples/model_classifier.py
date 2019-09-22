@@ -4,7 +4,7 @@
 @description: 
 """
 
-from sentiment_classifier import model_classifier
+from pysenti import model_classifier
 
 texts = ["苹果是一家伟大的公司",
          "土豆丝很好吃",

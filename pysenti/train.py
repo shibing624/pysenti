@@ -6,8 +6,8 @@
 
 from codecs import open
 
-from sentiment_classifier import config
-from sentiment_classifier.model_classifier import ModelClassifier
+from pysenti import config
+from pysenti.model_classifier import ModelClassifier
 
 
 def train(neg_file, pos_file, model_path):

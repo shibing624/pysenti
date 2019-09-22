@@ -4,9 +4,9 @@
 @description: 
 """
 
-from sentiment_classifier.bayes import Bayes
-from sentiment_classifier.tokenizer import segment
-from sentiment_classifier.utils import filter_stop
+from pysenti.bayes import Bayes
+from pysenti.tokenizer import segment
+from pysenti.utils import filter_stop
 
 
 class ModelClassifier(object):

@@ -8,7 +8,7 @@ import pickle
 import re
 from codecs import open
 
-from sentiment_classifier import config
+from pysenti import config
 
 
 def load_set(path):

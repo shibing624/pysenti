@@ -4,9 +4,9 @@
 @description: 
 """
 
-from sentiment_classifier import config
-from sentiment_classifier import tokenizer
-from sentiment_classifier.utils import split_sentence
+from pysenti import config
+from pysenti import tokenizer
+from pysenti.utils import split_sentence
 
 
 class RuleClassifier(object):
@@ -33,7 +33,7 @@ class RuleClassifier(object):
         self.user_sentiment_dict = self._get_dict(path)
         self.sentiment_dict.update(self.user_sentiment_dict)
 
-    def classify(self, sentence, print_show=False):
+    def classify(self, sentence):
         if not self.inited:
             self.init()
         # 情感分析整体数据结构
@@ -48,11 +48,6 @@ class RuleClassifier(object):
             # 将子句分析的数据结果添加到整体数据结构中
             result["sub_clause" + str(i)] = sub_clause
             result['score'] += sub_clause['score']
-
-        if print_show:
-            print("\n" + sentence)
-            self._output_analysis(result)
-            print(result, end="\n\n\n")
 
         return result
 
@@ -164,34 +159,6 @@ class RuleClassifier(object):
         # 返回的数据结构
         return orientation
 
-    def _output_analysis(self, comment_analysis):
-        """
-        输出comment_analysis分析的数据结构结果
-        :param comment_analysis:
-        :return:
-        """
-        output = "score:" + str(comment_analysis["score"]) + "\n"
-
-        for i in range(len(comment_analysis) - 1):
-            output += "sub_clause" + str(i) + ": "
-            clause = comment_analysis["sub_clause" + str(i)]
-            if len(clause["conjunction"]) > 0:
-                output += "conjunction:"
-                for punctuation in clause["conjunction"]:
-                    output += punctuation["key"] + " "
-            if len(clause["sentiment"]) > 0:
-                output += "sentiment:"
-                for positive in clause["sentiment"]:
-                    if len(positive["denial"]) > 0:
-                        for denial in positive["denial"]:
-                            output += denial["key"] + str(denial["position"]) + "-"
-                    if len(positive["adverb"]) > 0:
-                        for adverb in positive["adverb"]:
-                            output += adverb["key"] + str(adverb["position"]) + "-"
-                    output += positive["key"] + " "
-            output += "\n"
-        print(output)
-
     @staticmethod
     def _get_dict(path, encoding="utf-8"):
         """
@@ -222,5 +189,5 @@ if __name__ == '__main__':
                   '这笔钱是个天文数字',
                   '我一会儿出去玩了，你吃啥？给你带,然而你不知道']
     for i in a_sentence:
-        result = d.classify(i, print_show=True)
+        result = d.classify(i)
         print(i, result)

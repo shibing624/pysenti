@@ -6,7 +6,7 @@
 
 import os
 
-from sentiment_classifier import RuleClassifier
+from pysenti import RuleClassifier
 
 d = RuleClassifier()
 pwd_path = os.path.abspath(os.path.dirname(__file__))
@@ -17,5 +17,5 @@ a_sentence = ['剁椒鸡蛋好难吃。绝对没人受得了',
               '这笔钱是个天文数字',
               '我一会儿出去玩了，你吃啥？给你带,然而你不知道']
 for i in a_sentence:
-    result = d.classify(i, print_show=True)
+    result = d.classify(i)
     print(i, result)

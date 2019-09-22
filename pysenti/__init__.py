@@ -8,7 +8,7 @@ from . import config
 from .model_classifier import ModelClassifier
 from .rule_classfier import RuleClassifier
 
-__version__ = '0.1.2'
+__version__ = '0.1.3'
 
 rule_classifier = RuleClassifier()
 classify = rule_classifier.classify

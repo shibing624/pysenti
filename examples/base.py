@@ -4,11 +4,11 @@
 @description:
 """
 
-import sentiment_classifier
+import pysenti
 
 texts = ["苹果是一家伟大的公司",
          "土豆丝很好吃",
          "土豆丝很难吃"]
 for i in texts:
-    r = sentiment_classifier.classify(i)
+    r = pysenti.classify(i)
     print(i, r['score'], r)
