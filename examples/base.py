@@ -10,4 +10,5 @@ texts = ["苹果是一家伟大的公司",
          "土豆丝很难吃"]
 for i in texts:
     r = pysenti.classify(i)
-    print(i, r['score'], r)
+    print(i, r['score'])
+    print(r)

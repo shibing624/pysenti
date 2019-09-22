@@ -31,8 +31,11 @@ if args.user_dict:
 
 ln = fp.readline()
 while ln:
-    l = ln.rstrip('\r\n')
-    result = '\t'.join(pysenti.classify(ln.rstrip('\r\n')))
+    r = pysenti.classify(ln.rstrip())
+    if args.output_all:
+        result = str(r)
+    else:
+        result = str(r['score'])
     if PY2:
         result = result.encode(default_encoding)
     print(result)
