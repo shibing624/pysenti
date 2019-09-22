@@ -2,7 +2,6 @@
 [![PyPI version](https://badge.fury.io/py/pysenti.svg)](https://badge.fury.io/py/pysenti)
 [![License Apache 2.0](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/shibing624/pysenti/LICENSE)
 ![Language](https://img.shields.io/badge/Language-Python-blue.svg)
-![Python3](https://img.shields.io/badge/Python-3.X-red.svg)
 
 
 # pysenti
@@ -26,11 +25,11 @@ Chinese Sentiment Classification Tool for Python. 中文情感极性分析工具
 
 ## 特征
 ### 规则
-* [情感词典](https://github.com/shibing624/pysenti/tree/master/sentiment_classifier/data)整合了`知网情感词典`、`清华大学李军情感词典`、[BosonNLP情感词典](https://bosonnlp.com/dev/resource)、`否定词词典`。
+* [情感词典](https://github.com/shibing624/pysenti/tree/master/pysenti/data)整合了`知网情感词典`、`清华大学李军情感词典`、[BosonNLP情感词典](https://bosonnlp.com/dev/resource)、`否定词词典`。
 
 ### 模型
 * bayes 文本分类模型
-* [样本数据](https://github.com/shibing624/pysenti/tree/master/sentiment_classifier/data)来自商品评论数据，分为积极、消极两类。
+* [样本数据](https://github.com/shibing624/pysenti/tree/master/pysenti/data)来自商品评论数据，分为积极、消极两类。
 
 ## demo
 
