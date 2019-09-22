@@ -5,15 +5,11 @@
 """
 from __future__ import print_function
 
-import sys
 from codecs import open
 
 from setuptools import setup, find_packages
 
 from pysenti import __version__
-
-if sys.version_info < (3,):
-    sys.exit('Sorry, Python3 is required for pysenti')
 
 with open('README.md', 'r', encoding='utf-8') as f:
     readme = f.read()
@@ -40,6 +36,7 @@ setup(
         'Natural Language :: Chinese (Simplified)',
         'Natural Language :: Chinese (Traditional)',
         'Programming Language :: Python',
+        'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.5',
@@ -51,10 +48,7 @@ setup(
     ],
     keywords='NLP,sentiment-classifier,sentiment-classification,pysenti',
     install_requires=reqs.strip().split('\n'),
-    packages=find_packages(exclude=['tests']),
+    packages=find_packages(),
     package_dir={'pysenti': 'pysenti'},
-    package_data={
-        'pysenti': ['*.*', '../LICENSE', '../README.*', '../*.txt', 'data/*'],
-    },
-    test_suite='tests',
+    package_data={'pysenti': ['*.*', '../LICENSE', '../README.*', '../*.txt', 'data/*']}
 )

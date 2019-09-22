@@ -3,7 +3,6 @@
 @author:XuMing（xuming624@qq.com)
 @description: 
 """
-
 from pysenti import model_classifier
 
 texts = ["苹果是一家伟大的公司",

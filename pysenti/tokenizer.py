@@ -8,6 +8,8 @@ import logging
 import jieba
 from jieba import posseg
 
+from .compat import strdecode
+
 jieba.default_logger.setLevel(logging.ERROR)
 
 
@@ -19,6 +21,7 @@ def segment(sentence, cut_type='word', pos=False):
     :param pos: enable POS
     :return: list
     """
+    sentence = strdecode(sentence)
     if pos:
         if cut_type == 'word':
             return posseg.lcut(sentence)

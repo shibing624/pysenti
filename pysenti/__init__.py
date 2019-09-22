@@ -5,10 +5,11 @@
 """
 
 from . import config
+from .compat import strdecode
 from .model_classifier import ModelClassifier
 from .rule_classfier import RuleClassifier
 
-__version__ = '0.1.3'
+__version__ = '0.1.4'
 
 rule_classifier = RuleClassifier()
 classify = rule_classifier.classify

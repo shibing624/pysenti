@@ -3,7 +3,6 @@
 @author:XuMing（xuming624@qq.com)
 @description:
 """
-
 import pysenti
 
 texts = ["苹果是一家伟大的公司",

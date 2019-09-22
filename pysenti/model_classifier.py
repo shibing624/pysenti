@@ -5,6 +5,7 @@
 """
 
 from pysenti.bayes import Bayes
+from pysenti.compat import strdecode
 from pysenti.tokenizer import segment
 from pysenti.utils import filter_stop
 
@@ -35,10 +36,10 @@ class ModelClassifier(object):
             data.append([self.handle(sent), 'pos'])
         self.classifier.train(data)
 
-    def classify(self, sent):
+    def classify(self, text):
         """
-        classifiy sentence text
-        :param sent: text, str
+        sentiment classification text
+        :param text: text, str
         :return:    "positive_prob": 0.0,
                     "negative_prob": 0.0
                     dict
@@ -46,7 +47,8 @@ class ModelClassifier(object):
         if not self.inited:
             self.load()
         result = {"positive_prob": 0.0, "negative_prob": 0.0}
-        ret, prob = self.classifier.classify(self.handle(sent))
+        text = strdecode(text)
+        ret, prob = self.classifier.classify(self.handle(text))
         if ret == 'pos':
             result["positive_prob"] = round(prob, 3)
             result["negative_prob"] = round(1 - prob, 3)
@@ -65,5 +67,5 @@ if __name__ == '__main__':
                   '这笔钱是个天文数字',
                   '我一会儿出去玩了，你吃啥？给你带']
     for i in a_sentence:
-        result = model.classify(i)
-        print(i, result)
+        r = model.classify(i)
+        print(i, r)

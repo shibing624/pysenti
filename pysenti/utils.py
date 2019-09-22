@@ -57,7 +57,7 @@ def dump_pkl(vocab, pkl_path, overwrite=True):
 
 
 def split_sentence(sentence):
-    pattern = re.compile("[，。%、！!？?,；～~.… ]+")
+    pattern = re.compile(u"[，。%、！!？?,；～~.… ]+")
     clauses = [i for i in pattern.split(sentence.strip()) if i]
     return clauses
 

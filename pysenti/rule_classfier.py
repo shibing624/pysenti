@@ -3,9 +3,12 @@
 @author:XuMing（xuming624@qq.com)
 @description: 
 """
+from codecs import open
+from collections import OrderedDict
 
 from pysenti import config
 from pysenti import tokenizer
+from pysenti.compat import strdecode
 from pysenti.utils import split_sentence
 
 
@@ -19,9 +22,9 @@ class RuleClassifier(object):
         self.user_sentiment_dict = {}
         self.inited = False
 
-    def init(self):
+    def init(self, sentiment_dict_path=config.sentiment_dict_path):
         # 加载情感词典词典
-        self.sentiment_dict = self._get_dict(config.sentiment_dict_path)
+        self.sentiment_dict = self._get_dict(sentiment_dict_path)
         self.conjunction_dict = self._get_dict(config.conjunction_dict_path)  # 连词
         self.adverb_dict = self._get_dict(config.adverb_dict_path)  # 副词
         self.denial_dict = self._get_dict(config.denial_dict_path)
@@ -33,13 +36,14 @@ class RuleClassifier(object):
         self.user_sentiment_dict = self._get_dict(path)
         self.sentiment_dict.update(self.user_sentiment_dict)
 
-    def classify(self, sentence):
+    def classify(self, text):
         if not self.inited:
             self.init()
         # 情感分析整体数据结构
-        result = {"score": 0}
+        result = OrderedDict(score=0)
+        text = strdecode(text)
         # 分句
-        clauses = split_sentence(sentence)
+        clauses = split_sentence(text)
         # 对每分句进行情感分析
         for i in range(len(clauses)):
             # 情感分析子句的数据结构
@@ -168,7 +172,7 @@ class RuleClassifier(object):
         :return:
         """
         sentiment_dict = {}
-        with open(path, encoding=encoding) as f:
+        with open(path, 'r', encoding=encoding) as f:
             c = 0
             for line in f:
                 parts = line.strip().split()
@@ -190,5 +194,5 @@ if __name__ == '__main__':
                   '这笔钱是个天文数字',
                   '我一会儿出去玩了，你吃啥？给你带,然而你不知道']
     for i in a_sentence:
-        result = d.classify(i)
-        print(i, result)
+        r = d.classify(i)
+        print(i, r)
