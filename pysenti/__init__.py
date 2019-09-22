@@ -9,7 +9,7 @@ from .compat import strdecode
 from .model_classifier import ModelClassifier
 from .rule_classfier import RuleClassifier
 
-__version__ = '0.1.4'
+__version__ = '0.1.5'
 
 rule_classifier = RuleClassifier()
 classify = rule_classifier.classify
