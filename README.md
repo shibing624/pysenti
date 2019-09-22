@@ -90,6 +90,67 @@ output：
 
 ```
 
+### 命令行
+
+使用示例： python -m pysenti news.txt > news_result.txt
+
+命令行选项（翻译）：
+```
+使用: python -m pysenti [options] filename
+
+命令行界面
+
+固定参数:
+  filename              输入文件
+
+可选参数:
+  -h, --help            显示此帮助信息并退出
+  -d DICT, --dict DICT  使用 DICT 代替默认词典
+  -u USER_DICT, --user-dict USER_DICT
+                        使用 USER_DICT 作为附加词典，与默认词典或自定义词典配合使用
+  -a, --output-all      输出句子及词级别情感分析详细信息
+  -V, --version         显示版本信息并退出
+
+如果没有指定文件名，则使用标准输入。
+```
+
+
+`--help`选项输出：
+```
+$> python -m jieba --help
+
+usage: python3 -m pysenti [options] filename
+
+pysenti command line interface.
+
+positional arguments:
+  filename              input file
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -d DICT, --dict DICT  use DICT as dictionary
+  -u USER_DICT, --user-dict USER_DICT
+                        use USER_DICT together with the default dictionary or
+                        DICT (if specified)
+  -a, --output-all      output text sentiment score and word sentiment info
+  -V, --version         show program's version number and exit
+
+If no filename specified, use STDIN instead.
+```
+
+### 延迟加载机制
+
+pysenti 采用延迟加载，`import pysenti` 和 ``和 `from pysenti import rule_classifier` 不会立即触发词典的加载，一旦有必要才开始加载词典。如果你想手工初始 pysenti，也可以手动初始化。
+```
+import pysenti
+pysenti.rule_classifier.init()  # 手动初始化（可选）
+```
+
+有了延迟加载机制后，你可以改变主词典的路径:
+```
+pysenti.rule_classifier.init('data/sentiment_dict.txt')
+
+```
 
 ## 感谢
 
