@@ -140,7 +140,7 @@ If no filename specified, use STDIN instead.
 
 ### 延迟加载机制
 
-pysenti 采用延迟加载，`import pysenti` 和 ``和 `from pysenti import rule_classifier` 不会立即触发词典的加载，一旦有必要才开始加载词典。如果你想手工初始 pysenti，也可以手动初始化。
+pysenti 采用延迟加载，`import pysenti` 和 `from pysenti import rule_classifier` 不会立即触发词典的加载，一旦有必要才开始加载词典。如果你想手工初始 pysenti，也可以手动初始化。
 ```
 import pysenti
 pysenti.rule_classifier.init()  # 手动初始化（可选）

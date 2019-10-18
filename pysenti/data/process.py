@@ -6,20 +6,19 @@
 from codecs import open
 
 r = set()
-with open('pos_dict.txt', 'r', encoding='utf-8')as f:
+with open('pos_dict.txt', 'r', encoding='utf-8') as f:
     for line in f:
         line = line.strip()
         r.add(line)
 
 sentiments = set()
-c = 0
 with open('sentiment_dict.txt', 'r', encoding='utf-8') as f:
     for line in f:
         line = line.strip().split()
         w = line[0]
         sentiments.add(w)
 
-with open('pos', 'w', encoding='utf-8')as f:
+with open('pos', 'w', encoding='utf-8') as f:
     for i in r:
         if i not in sentiments:
             f.write(i + ' 2' + '\n')
