@@ -31,10 +31,6 @@ Chinese Sentiment Classification Tool for Python. 中文情感极性分析工具
 * bayes 文本分类模型
 * [样本数据](https://github.com/shibing624/pysenti/tree/master/pysenti/data)来自商品评论数据，分为积极、消极两类。
 
-## demo
-
-https://www.borntowin.cn/product/sentiment_classify
-
 
 ## 安装
 * 全自动安装：pip3 install pysenti
@@ -117,7 +113,7 @@ output：
 
 `--help`选项输出：
 ```
-$> python -m jieba --help
+$> python -m pysenti --help
 
 usage: python3 -m pysenti [options] filename
 
