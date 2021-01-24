@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-@author:XuMing（xuming624@qq.com)
+@author:XuMing(xuming624@qq.com)
 @description: 
 """
 
@@ -9,9 +9,10 @@ from .compat import strdecode
 from .model_classifier import ModelClassifier
 from .rule_classfier import RuleClassifier
 
-__version__ = '0.1.6'
+__version__ = '0.1.7'
 
 rule_classifier = RuleClassifier()
 classify = rule_classifier.classify
 
 model_classifier = ModelClassifier(config.sentiment_model_path)
+model_classify = model_classifier.classify

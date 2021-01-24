@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-@author:XuMing（xuming624@qq.com)
+@author:XuMing(xuming624@qq.com)
 @description:
 """
 
@@ -20,3 +20,6 @@ conjunction_dict_path = os.path.join(pwd_path, 'data/conjunction_dict.txt')
 adverb_dict_path = os.path.join(pwd_path, 'data/adverb_dict.txt')
 # 否定词典
 denial_dict_path = os.path.join(pwd_path, 'data/denial_dict.txt')
+
+# model train
+train_file_path = os.path.join(pwd_path, 'train.txt')
