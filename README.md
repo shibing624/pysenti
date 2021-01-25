@@ -8,7 +8,7 @@
 
 Chinese Sentiment Classification Tool for Python. 中文情感极性分析工具。
 
-**pysenti**基于规则词典的情感极性分析，扩展性强，可作为工业用的基准方法。
+**pysenti**基于规则词典的情感极性分析，扩展性强，可作为调研用的基准方法。
 
 
 ## 方法
