@@ -47,7 +47,7 @@ python3 setup.py install
 ```
 
 ## Usage
-#### 规则方法
+### 规则方法
 ```
 import pysenti
 
@@ -68,7 +68,7 @@ output:
 ```
 > score: 正值是积极情感；负值是消极情感。
 
-#### 模型方法
+### 模型方法
 
 
 ```
@@ -91,7 +91,7 @@ output：
 
 ```
 
-#### 延迟加载机制
+### 延迟加载机制
 
 pysenti 采用延迟加载，`import pysenti` 和 `from pysenti import rule_classifier` 不会立即触发词典的加载，一旦有必要才开始加载词典。如果你想手工初始 pysenti，也可以手动初始化。
 ```
@@ -104,7 +104,7 @@ pysenti.rule_classifier.init()  # 手动初始化（可选）
 pysenti.rule_classifier.init('data/sentiment_dict.txt')
 ```
 
-#### 命令行
+### 命令行
 
 使用示例： python -m pysenti news.txt > news_result.txt
 
