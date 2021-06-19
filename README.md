@@ -10,8 +10,10 @@ Chinese Sentiment Classification Tool for Python. 中文情感极性分析工具
 
 **pysenti**基于规则词典的情感极性分析，扩展性强，可作为调研用的基准方法。
 
+## Question
+文本情感极性（倾向）分析咋做？
 
-## 方法
+## Solution
 ### 规则的解决思路
 1. 中文情感极性分析，文本切分为段落，再切词，通过情感词标识出各个词语的情感极性，包括积极、中立、消极。
 2. 结合句子结构（包括连词、否定词、副词、标点等）给各情感词语的情感极性赋予权重，然后加权求和得到文本的情感极性得分。
@@ -23,7 +25,7 @@ Chinese Sentiment Classification Tool for Python. 中文情感极性分析工具
 2. 优点：单一领域准召率高。
 3. 缺点：不通用，有标注数据的样本收集困难，扩展性弱。
 
-## 特征
+## Feature
 ### 规则
 * [情感词典](https://github.com/shibing624/pysenti/tree/master/pysenti/data)整合了`知网情感词典`、`清华大学李军情感词典`、[BosonNLP情感词典](https://bosonnlp.com/dev/resource)、`否定词词典`。
 
@@ -31,8 +33,11 @@ Chinese Sentiment Classification Tool for Python. 中文情感极性分析工具
 * bayes 文本分类模型
 * [样本数据](https://github.com/shibing624/pysenti/tree/master/pysenti/data)来自商品评论数据，分为积极、消极两类。
 
+## Demo
 
-## 安装
+http://42.193.145.218/product/sentiment_classify/
+
+## Install
 * 全自动安装：pip3 install pysenti
 * 半自动安装：
 ```
@@ -41,8 +46,8 @@ cd pysenti
 python3 setup.py install
 ```
 
-## 使用示例
-### 规则方法
+## Usage
+#### 规则方法
 ```
 import pysenti
 
@@ -63,7 +68,7 @@ output:
 ```
 > score: 正值是积极情感；负值是消极情感。
 
-### 模型方法
+#### 模型方法
 
 
 ```
@@ -86,7 +91,20 @@ output：
 
 ```
 
-### 命令行
+#### 延迟加载机制
+
+pysenti 采用延迟加载，`import pysenti` 和 `from pysenti import rule_classifier` 不会立即触发词典的加载，一旦有必要才开始加载词典。如果你想手工初始 pysenti，也可以手动初始化。
+```
+import pysenti
+pysenti.rule_classifier.init()  # 手动初始化（可选）
+```
+
+有了延迟加载机制后，你可以改变主词典的路径:
+```
+pysenti.rule_classifier.init('data/sentiment_dict.txt')
+```
+
+#### 命令行
 
 使用示例： python -m pysenti news.txt > news_result.txt
 
@@ -134,21 +152,7 @@ optional arguments:
 If no filename specified, use STDIN instead.
 ```
 
-### 延迟加载机制
+## Reference
 
-pysenti 采用延迟加载，`import pysenti` 和 `from pysenti import rule_classifier` 不会立即触发词典的加载，一旦有必要才开始加载词典。如果你想手工初始 pysenti，也可以手动初始化。
-```
-import pysenti
-pysenti.rule_classifier.init()  # 手动初始化（可选）
-```
-
-有了延迟加载机制后，你可以改变主词典的路径:
-```
-pysenti.rule_classifier.init('data/sentiment_dict.txt')
-
-```
-
-## 感谢
-
-1. snownlp
-2. SentimentPolarityAnalysis
+- snownlp
+- SentimentPolarityAnalysis
