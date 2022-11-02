@@ -35,5 +35,5 @@ setup(
     install_requires=['jieba'],
     packages=find_packages(),
     package_dir={'pysenti': 'pysenti'},
-    package_data={'pysenti': ['*.*', '../LICENSE', '../README.*', '../*.txt', 'data/*']}
+    package_data={'pysenti': ['*.*', '../README.*', 'data/*']}
 )
