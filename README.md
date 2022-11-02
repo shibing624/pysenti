@@ -35,7 +35,7 @@ Chinese Sentiment Classification Tool for Python. 中文情感极性分析工具
 
 ## Demo
 
-http://42.193.145.218/product/sentiment_classify/
+https://www.mulanai.com/product/sentiment_classify/
 
 ## Install
 * 全自动安装：pip3 install pysenti
