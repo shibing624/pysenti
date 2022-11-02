@@ -3,10 +3,9 @@
 @author:XuMing(xuming624@qq.com)
 @description: 
 """
-
+import os
 from codecs import open
 
-from pysenti import config
 from pysenti.model_classifier import ModelClassifier
 
 
@@ -28,16 +27,15 @@ def save():
     classifier.save()
 
 
-def load():
-    classifier.load()
-
-
 def classify(sent):
     return classifier.classify(sent)
 
 
 if __name__ == '__main__':
-    train('data/neg_sentences.txt', 'data/pos_sentences.txt', config.sentiment_model_path)
+    pwd_path = os.path.abspath(os.path.dirname(__file__))
+    default_sentiment_model_path = os.path.join(pwd_path, 'data/sentiment_model.pkl')
+
+    train('data/neg_sentences.txt', 'data/pos_sentences.txt', default_sentiment_model_path)
     save()
     txt = "苹果是一家伟大的公司"
     print(txt, ' prob: ', classify(txt))

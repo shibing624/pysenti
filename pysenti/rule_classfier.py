@@ -3,12 +3,24 @@
 @author:XuMing(xuming624@qq.com)
 @description: 
 """
+import os
 from codecs import open
 
-from pysenti import config
 from pysenti import tokenizer
 from pysenti.compat import strdecode
 from pysenti.utils import split_sentence
+
+
+pwd_path = os.path.abspath(os.path.dirname(__file__))
+
+# 情感词典，包括积极词典、消极词典
+sentiment_dict_path = os.path.join(pwd_path, 'data/sentiment_dict.txt')
+# 连词词典
+conjunction_dict_path = os.path.join(pwd_path, 'data/conjunction_dict.txt')
+# 副词词典
+adverb_dict_path = os.path.join(pwd_path, 'data/adverb_dict.txt')
+# 否定词典
+denial_dict_path = os.path.join(pwd_path, 'data/denial_dict.txt')
 
 
 class RuleClassifier(object):
@@ -21,12 +33,12 @@ class RuleClassifier(object):
         self.user_sentiment_dict = {}
         self.inited = False
 
-    def init(self, sentiment_dict_path=config.sentiment_dict_path):
+    def init(self, sentiment_dict_path=sentiment_dict_path):
         # 加载情感词典词典
         self.sentiment_dict = self._get_dict(sentiment_dict_path)
-        self.conjunction_dict = self._get_dict(config.conjunction_dict_path)  # 连词
-        self.adverb_dict = self._get_dict(config.adverb_dict_path)  # 副词
-        self.denial_dict = self._get_dict(config.denial_dict_path)
+        self.conjunction_dict = self._get_dict(conjunction_dict_path)  # 连词
+        self.adverb_dict = self._get_dict(adverb_dict_path)  # 副词
+        self.denial_dict = self._get_dict(denial_dict_path)
         self.inited = True
 
     def load_user_sentiment_dict(self, path):
@@ -157,7 +169,7 @@ class RuleClassifier(object):
                 # 判断是否是“不是很好”的结构（区别于“很不好”）
                 if len(orientation["adverb"]) > 0 and len(orientation["denial"]) == 0:
                     orientation_score *= 0.3
-        # 添加情感分析值。
+        # 添加情感分析值
         orientation["score"] = orientation_score
         # 返回的数据结构
         return orientation
@@ -185,8 +197,6 @@ class RuleClassifier(object):
 
 if __name__ == '__main__':
     d = RuleClassifier()
-    d.load_user_sentiment_dict('../extra_dict/user_sentiment_dict.txt')
-    print(d.user_sentiment_dict)
 
     a_sentence = ['剁椒鸡蛋好难吃。绝对没人受得了',
                   '土豆丝很好吃', '土豆丝很难吃',

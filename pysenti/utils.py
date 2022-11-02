@@ -8,8 +8,6 @@ import pickle
 import re
 from codecs import open
 
-from pysenti import config
-
 
 def load_set(path):
     words = set()
@@ -21,10 +19,8 @@ def load_set(path):
 
 re_zh = re.compile('([\u4E00-\u9FA5]+)')
 
-stopwords = load_set(config.stopwords_path)
 
-
-def filter_stop(words):
+def filter_stop(words, stopwords):
     return list(filter(lambda x: x not in stopwords, words))
 
 

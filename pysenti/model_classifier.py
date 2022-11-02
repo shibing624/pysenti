@@ -3,29 +3,31 @@
 @author:XuMing(xuming624@qq.com)
 @description: 
 """
-
+import os
 from pysenti.bayes import Bayes
 from pysenti.compat import strdecode
 from pysenti.tokenizer import segment
-from pysenti.utils import filter_stop
+from pysenti.utils import filter_stop, load_set
 
+pwd_path = os.path.abspath(os.path.dirname(__file__))
+default_sentiment_model_path = os.path.join(pwd_path, 'data/sentiment_model.pkl')
+# 停用词
+default_stopwords_path = os.path.join(pwd_path, 'data/stopwords.txt')
 
-class ModelClassifier(object):
-    def __init__(self, model_path):
+class ModelClassifier:
+    def __init__(self, model_path=default_sentiment_model_path, stopwords_path=default_stopwords_path):
         self.classifier = Bayes()
         self.model_path = model_path
-        self.inited = False
+        self.stopwords = load_set(stopwords_path)
+        if model_path:
+            self.classifier.load(self.model_path)
 
     def save(self):
         self.classifier.save(self.model_path)
 
-    def load(self):
-        self.classifier.load(self.model_path)
-        self.inited = True
-
     def handle(self, doc):
         words = segment(doc)
-        words = filter_stop(words)
+        words = filter_stop(words, self.stopwords)
         return words
 
     def train(self, neg_docs, pos_docs):
@@ -44,24 +46,20 @@ class ModelClassifier(object):
                     "negative_prob": 0.0
                     dict
         """
-        if not self.inited:
-            self.load()
         result = {"positive_prob": 0.0, "negative_prob": 0.0}
         text = strdecode(text)
         ret, prob = self.classifier.classify(self.handle(text))
         if ret == 'pos':
-            result["positive_prob"] = round(prob, 3)
-            result["negative_prob"] = round(1 - prob, 3)
-        elif ret == 'neg':
-            result["positive_prob"] = round(1 - prob, 3)
-            result["negative_prob"] = round(prob, 3)
+            result["positive_prob"] = prob
+            result["negative_prob"] = 1 - prob
         else:
-            raise ValueError("unknown class id.")
+            result["negative_prob"] = prob
+            result["positive_prob"] = 1 - prob
         return result
 
 
 if __name__ == '__main__':
-    model = ModelClassifier('./data/sentiment_model.pkl')
+    model = ModelClassifier()
     a_sentence = ['剁椒鸡蛋好难吃。绝对没人受得了',
                   '土豆丝很好吃', '土豆丝很难吃',
                   '这笔钱是个天文数字',

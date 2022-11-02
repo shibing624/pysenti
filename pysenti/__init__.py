@@ -4,15 +4,12 @@
 @description: 
 """
 
-from . import config
-from .compat import strdecode
-from .model_classifier import ModelClassifier
-from .rule_classfier import RuleClassifier
+from pysenti.compat import strdecode
+from pysenti.model_classifier import ModelClassifier
+from pysenti.rule_classfier import RuleClassifier
 
-__version__ = '0.1.7'
+__version__ = '0.1.8'
 
 rule_classifier = RuleClassifier()
 classify = rule_classifier.classify
 
-model_classifier = ModelClassifier(config.sentiment_model_path)
-model_classify = model_classifier.classify

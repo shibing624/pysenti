@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-
+"""
+@author:XuMing(xuming624@qq.com)
+@description:
+"""
 from math import log, exp
 
-from .frequency import AddOneProb
-from .utils import dump_pkl, load_pkl
+from pysenti.frequency import AddOneProb
+from pysenti.utils import dump_pkl, load_pkl
 
 
 class Bayes(object):

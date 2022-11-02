@@ -3,11 +3,12 @@
 import sys
 from argparse import ArgumentParser
 
-from pysenti import rule_classifier, __version__
+from pysenti import RuleClassifier, __version__
 from pysenti.compat import PY2, default_encoding
 
 
 def main(args):
+    rule_classifier = RuleClassifier()
     fp = open(args.filename, 'r') if args.filename else sys.stdin
 
     if args.dict:
