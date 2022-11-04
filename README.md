@@ -40,7 +40,7 @@ https://www.mulanai.com/product/sentiment_classify/
 ## Install
 * 全自动安装：pip3 install pysenti
 * 半自动安装：
-```
+```shell
 git clone https://github.com/shibing624/pysenti.git
 cd pysenti
 python3 setup.py install
@@ -48,7 +48,7 @@ python3 setup.py install
 
 ## Usage
 ### 规则方法
-```
+```python
 import pysenti
 
 texts = ["苹果是一家伟大的公司",
@@ -61,7 +61,7 @@ for i in texts:
 ```
 
 output:
-```
+```shell
 苹果是一家伟大的公司 3.4346924811096997 {'score': 3.4346924811096997, 'sub_clause0': {'score': 3.4346924811096997, 'sentiment': [{'key': '苹果', 'adverb': [], 'denial': [], 'value': 1.37846341627, 'score': 1.37846341627}, {'key': '是', 'adverb': [], 'denial': [], 'value': -0.252600480826, 'score': -0.252600480826}, {'key': '一家', 'adverb': [], 'denial': [], 'value': 1.48470161748, 'score': 1.48470161748}, {'key': '伟大', 'adverb': [], 'denial': [], 'value': 1.14925252286, 'score': 1.14925252286}, {'key': '的', 'adverb': [], 'denial': [], 'value': 0.0353323193687, 'score': 0.0353323193687}, {'key': '公司', 'adverb': [], 'denial': [], 'value': -0.360456914043, 'score': -0.360456914043}], 'conjunction': []}}
 土豆丝很好吃 2.294311221077 {'score': 2.294311221077, 'sub_clause0': {'score': 2.294311221077, 'sentiment': [{'key': '土豆丝', 'adverb': [], 'denial': [], 'value': 0.294892711165, 'score': 0.294892711165}, {'key': '很', 'adverb': [], 'denial': [], 'value': 0.530242664632, 'score': 0.530242664632}, {'key': '好吃', 'adverb': [], 'denial': [], 'value': 1.46917584528, 'score': 1.46917584528}], 'conjunction': []}}
 土豆丝很难吃 -2.381874203563 {'score': -2.381874203563, 'sub_clause0': {'score': -2.381874203563, 'sentiment': [{'key': '土豆丝', 'adverb': [], 'denial': [], 'value': 0.294892711165, 'score': 0.294892711165}, {'key': '很', 'adverb': [], 'denial': [], 'value': 0.530242664632, 'score': 0.530242664632}, {'key': '难吃', 'adverb': [], 'denial': [], 'value': -3.20700957936, 'score': -3.20700957936}], 'conjunction': []}}
@@ -71,7 +71,7 @@ output:
 ### 模型方法
 
 
-```
+```python
 from pysenti import model_classifier
 
 texts = ["苹果是一家伟大的公司",
