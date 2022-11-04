@@ -5,11 +5,10 @@
 """
 import os
 from codecs import open
-
+from loguru import logger
 from pysenti import tokenizer
 from pysenti.compat import strdecode
 from pysenti.utils import split_sentence
-
 
 pwd_path = os.path.abspath(os.path.dirname(__file__))
 
@@ -191,7 +190,7 @@ class RuleClassifier(object):
                 if len(parts) == 2:
                     sentiment_dict[parts[0]] = float(parts[1])
                 else:
-                    print("error", c, line)
+                    logger.error(f"num: {c}, {line}")
         return sentiment_dict
 
 

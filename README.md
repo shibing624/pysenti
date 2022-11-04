@@ -35,10 +35,10 @@ Chinese Sentiment Classification Tool for Python. 中文情感极性分析工具
 
 ## Demo
 
-https://www.mulanai.com/product/sentiment_classify/
+Official Demo: https://www.mulanai.com/product/sentiment_classify/
 
 ## Install
-* 全自动安装：pip3 install pysenti
+* 全自动安装：pip install pysenti
 * 半自动安装：
 ```shell
 git clone https://github.com/shibing624/pysenti.git
@@ -69,47 +69,55 @@ output:
 > score: 正值是积极情感；负值是消极情感。
 
 ### 模型方法
-
+example: [examples/model_classifier_demo.py](examples/model_classifier_demo.py)
 
 ```python
-from pysenti import model_classifier
+from pysenti import ModelClassifier
 
 texts = ["苹果是一家伟大的公司",
          "土豆丝很好吃",
+         "垃圾，在酒店中应该是很差的！",
+         "我们刚走过一个烧烤店",
          "土豆丝很难吃"]
-for i in texts:
-    result = model_classifier.classify(i)
-    print(i, result)
 
+m = ModelClassifier()
+for i in texts:
+    r = m.classify(i)
+    print(i, r)
 ```
 
 output：
-```
+```shell
 苹果是一家伟大的公司 {'positive_prob': 0.682, 'negative_prob': 0.318}
 土豆丝很好吃 {'positive_prob': 0.601, 'negative_prob': 0.399}
 土豆丝很难吃 {'positive_prob': 0.283, 'negative_prob': 0.717}
-
 ```
 
 ### 延迟加载机制
 
 pysenti 采用延迟加载，`import pysenti` 和 `from pysenti import rule_classifier` 不会立即触发词典的加载，一旦有必要才开始加载词典。如果你想手工初始 pysenti，也可以手动初始化。
-```
+```python
 import pysenti
 pysenti.rule_classifier.init()  # 手动初始化（可选）
 ```
 
-有了延迟加载机制后，你可以改变主词典的路径:
+你还可以使用自定义情感词典:
+```python
+pysenti.rule_classifier.init('user_sentiment_dict.txt')
 ```
-pysenti.rule_classifier.init('data/sentiment_dict.txt')
+情感词典`user_sentiment_dict.txt`的格式如下：
+```shell
+难吃 -10
+好吃 10
 ```
+空格间隔，第一个是词，第二个是分值：正值代表积极情感，负值代表消极情感，越大情感越强烈。
 
 ### 命令行
 
 使用示例： python -m pysenti news.txt > news_result.txt
 
 命令行选项（翻译）：
-```
+```shell
 使用: python -m pysenti [options] filename
 
 命令行界面
@@ -130,7 +138,7 @@ pysenti.rule_classifier.init('data/sentiment_dict.txt')
 
 
 `--help`选项输出：
-```
+```shell
 $> python -m pysenti --help
 
 usage: python3 -m pysenti [options] filename
