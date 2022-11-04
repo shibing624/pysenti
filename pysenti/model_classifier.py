@@ -14,6 +14,7 @@ default_sentiment_model_path = os.path.join(pwd_path, 'data/sentiment_model.pkl'
 # 停用词
 default_stopwords_path = os.path.join(pwd_path, 'data/stopwords.txt')
 
+
 class ModelClassifier:
     def __init__(self, model_path=default_sentiment_model_path, stopwords_path=default_stopwords_path):
         self.classifier = Bayes()

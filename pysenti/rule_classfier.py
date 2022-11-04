@@ -22,7 +22,7 @@ adverb_dict_path = os.path.join(pwd_path, 'data/adverb_dict.txt')
 denial_dict_path = os.path.join(pwd_path, 'data/denial_dict.txt')
 
 
-class RuleClassifier(object):
+class RuleClassifier:
     def __init__(self):
         self.name = "rule_classifier"
         self.sentiment_dict = {}

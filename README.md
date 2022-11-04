@@ -48,6 +48,8 @@ python3 setup.py install
 
 ## Usage
 ### 规则方法
+example: [examples/rule_classifier_demo.py](examples/rule_classifier_demo.py)
+
 ```python
 import pysenti
 

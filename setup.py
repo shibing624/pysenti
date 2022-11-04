@@ -10,7 +10,7 @@ with open('README.md', 'r', encoding='utf-8') as f:
 
 setup(
     name='pysenti',
-    version='0.1.8',
+    version='0.1.9',
     description='Chinese Sentiment Classifier',
     long_description=readme,
     long_description_content_type='text/markdown',
@@ -35,5 +35,5 @@ setup(
     install_requires=['jieba'],
     packages=find_packages(),
     package_dir={'pysenti': 'pysenti'},
-    package_data={'pysenti': ['*.*', '../README.*', 'data/*']}
+    package_data={'pysenti': ['*.*', 'data/*']}
 )

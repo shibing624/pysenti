@@ -8,7 +8,7 @@ from pysenti.compat import strdecode
 from pysenti.model_classifier import ModelClassifier
 from pysenti.rule_classfier import RuleClassifier
 
-__version__ = '0.1.8'
+__version__ = '0.1.9'
 
 rule_classifier = RuleClassifier()
 classify = rule_classifier.classify
