@@ -1,5 +1,5 @@
-
 [![PyPI version](https://badge.fury.io/py/pysenti.svg)](https://badge.fury.io/py/pysenti)
+[![Downloads](https://static.pepy.tech/badge/pysenti)](https://pepy.tech/project/pysenti)
 [![License Apache 2.0](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/shibing624/pysenti/LICENSE)
 ![Language](https://img.shields.io/badge/Language-Python-blue.svg)
 
